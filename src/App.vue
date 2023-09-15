@@ -34,6 +34,27 @@ const list_local = ref([
 
 
 //function
+
+function incrementQuantity(item) {
+  item.quantity++;
+  item.price = item.quantity * travelList.value.find((travel) => travel.name === item.name).price;
+}
+
+function decrementQuantity(item) {
+  if (item.quantity > 0) {
+    item.quantity--;
+    item.price = item.quantity * travelList.value.find((travel) => travel.name === item.name).price;
+  }
+}
+
+function removeItem(index) {
+  list_local.value.splice(index, 1);
+}
+
+function togglePopup() {
+  showPopup.value = !showPopup.value;
+}
+
 function list_local_control(name, quantity) {
   const existingItemIndex = list_local.value.findIndex(item => item.name === name);
 
@@ -51,21 +72,7 @@ function list_local_control(name, quantity) {
 }
 
 
-function incrementQuantity(item) {
-  item.quantity++;
-  item.price = item.quantity * travelList.value.find((travel) => travel.name === item.name).price;
-}
 
-function decrementQuantity(item) {
-  if (item.quantity > 0) {
-    item.quantity--;
-    item.price = item.quantity * travelList.value.find((travel) => travel.name === item.name).price;
-  }
-}
-
-function removeItem(index) {
-  list_local.value.splice(index, 1);
-}
 
 
 
@@ -85,10 +92,6 @@ const totalCost = computed(() => {
 });
 
 
-function togglePopup() {
-  showPopup.value = !showPopup.value;
-}
-
 
 </script>
 
@@ -100,7 +103,7 @@ function togglePopup() {
   <div class="overlay" v-if="showPopup">
     <HelloWorld />
   </div>
-
+  
   <div class="video-background">
         <video autoplay loop muted>
           <source src="https://cdn.discordapp.com/attachments/1004965415870546035/1152200148336779304/Dark_Aesthetic_Modern_Grand_Opening_Cafe_Mobile_Video.mp4" type="video/mp4">
